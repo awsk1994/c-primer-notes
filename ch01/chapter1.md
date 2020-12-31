@@ -1,0 +1,157 @@
+# Chapter 1 - Getting Started
+
+## 1.1 - Writing a Simple C++ Program
+
+ - Every C++ program contains one or more functions, one of which must be named **main**.
+
+```cpp
+int main()
+{
+  return 0;
+}
+```
+
+ - On most systems, the value returned from main is a status indicator.
+   - A return value of 0 indicates success.
+   - A nonzero return has a meaning that is defiend by the system; usually indicates some kind of error.
+
+### 1.1.1. Compiling and Executing our Program
+
+ - To run using command-line interface, we typically run:
+
+```
+$ CC prog.cc
+```
+ - CC = name of compiler,
+ - $ = system prompt,
+ - On windows, the compiler generates an executable file named prog1.exe. 
+ - On UNIX, compiler tends to generate an executable file named a.out
+
+To execute the executable file:
+ - On Windows, run "prog1" or "./prog1".
+ - On UNIX, run "a.out" or "./a.out".
+
+### Example
+```
+g++ -o prog1 main.cpp
+```
+ - '-o' names the executable file.
+   - If this is not named, the executable file becomes either 'a.out' or 'prog1'
+
+## 1.2. A first look at Input/Output
+ - Most of the examples in this book uses **iostream** library.
+ - Fundamental to the iostream library are two types named **istream** and **ostream**, which represents input and output streams, respectively.
+
+**Standard Input and Output Objects**
+
+ - To handle input, we use an object of type **istream**, named cin.
+   - also known as **standard input**.
+
+ - For output, we use an **ostream** object, named cout. 
+   - also known as **standard output**.
+
+ - **cerr**, also referred as standard error, is for warning and error messages.
+
+ - **clog** is for general information about the execution of the program.
+
+### Example:
+simpleIOProg.cpp
+```cpp
+#include <iostream>
+int main()
+{
+  std::cout << "Enter two numbers:" << std::endl;
+  int v1 = 0, v2 = 0;
+  std::cin >> v1 >> v2;
+  std::cout << "The sum of " << v1 << " and " << v2 << " is " << v1 + v2 << std::endl;
+  return 0;
+}
+```
+
+**Writing to Stream**
+```cpp
+std::cout << "Enter two numbers:" << std::endl;
+```
+ - The << operator takes two operands: the left-hand operand must be an ostream object; the right-hand operands is a value to print.
+ - The result of the output operator is the left-hand operand; the ostream object.
+
+  - Our line above is equivalent to:
+
+```cpp
+(std::cout << "Enter two numbers:") << std::endl;
+```
+
+Alternatively, this is equivalent to:
+```cpp
+std::cout << "Enter two numbers:";
+std::cout << std:endl;
+```
+
+ - The first output operator prints a messages.
+ - The second operator prints endl, which is a special value called a **manipulator**.
+   - This has the effect of ending the current line and flushing the buffer associated with that device.
+
+**Using Names from Standard Library**
+ - Why do we use std::cout instead of cout? 
+ - Prefix std:: indicates cout is defiend inside the namespace, std.
+
+## 1.3. Comments
+ - Use // or /* .. */
+
+## 1.4. Flow of Control
+### 1.4.1. While statement
+```cpp
+int sum = 0, val = 1;
+while(val <= 10){
+  sum += val;
+  ++val;
+}
+```
+
+### 1.4.2. For Statement 
+ - same as java
+```cpp
+for(int val = 1; val <= 10; ++val){
+  sum += val;
+  ...
+}
+```
+
+### 1.4.3. Reading an unknown number of inputs
+```cpp
+while(std::cin >> value)
+  sum += value;
+```
+ - We will give the input '3 4 5 6', and it will calculate the sum of these 4 numbers.
+
+**Entering end-of-file from keyboard**
+ - In windows, ctrl+z -> enter
+ - In UNIX, ctrl+d
+
+## 1.4.4 If Statement
+
+```cpp
+#include <iostream>
+int main()
+{
+  int currVal = 0, val = 0;
+  //Read first number and ensure we have data to process.
+  if(std::cin >> currVal){
+    ....
+    while(std::cin >> val){ // Read remaining numbers.a
+      ...
+    }
+  }
+  return 0;
+}
+```
+
+## 1.5. Introducing Classes
+ - We need to define a data structure to represent our transaction data.
+
+### 1.5.1. Sales_item class
+ - TODO: Come back
+
+
+## 1.6. BookStore Program
+TODO: Come bac
