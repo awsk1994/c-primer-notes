@@ -6,3 +6,15 @@
 
 # Log
  - 2021-12-30: Finished chapter 1
+
+# Basic Run cpp files on mac
+```
+g++ -o out test.cpp
+./out
+==OR==
+g++ test.cpp
+./a.out
+==OR==
+gcc -lstdc++ test.cpp
+./a.out
+```
