@@ -424,3 +424,79 @@ p2 = p1;    // 合法, 可以将普通指针赋值给常量指针
 ic = *p3;   // 合法, 对 p3 取值后是一个 int 然后赋值给 ic
 ```
 
+## 练习2.30
+
+对于下面的这些语句，请说明对象被声明成了顶层const还是底层const？
+
+```cpp
+const int v2 = 0; int v1 = v2;
+int *p1 = &v1, &r1 = v1;
+const int *p2 = &v2, *const p3 = &i, &r2 = v2;
+```
+
+解：
+
+v2 是顶层const，p2 是底层const，p3 既是顶层const又是底层const，r2 是底层const。
+
+## 练习2.31 (!!! need to study this again...)
+
+假设已有上一个练习中所做的那些声明，则下面的哪些语句是合法的？请说明顶层const和底层const在每个例子中有何体现。
+
+解：
+
+```cpp
+r1 = v2; // 合法, 顶层const在拷贝时不受影响
+p1 = p2; // 不合法, p2 是底层const，如果要拷贝必须要求 p1 也是底层const
+p2 = p1; // 合法, int* 可以转换成const int*
+p1 = p3; // 不合法, p3 是一个底层const，p1 不是
+p2 = p3; // 合法, p2 和 p3 都是底层const，拷贝时忽略掉顶层const
+```
+
+## 练习2.32
+
+下面的代码是否合法？如果非法，请设法将其修改正确。
+
+``int null = 0, *p = null;``
+
+解：
+
+合法。指针可以初始化为 0 表示为空指针。
+
+## 练习2.33
+
+利用本节定义的变量，判断下列语句的运行结果。
+
+解：
+
+```cpp
+a=42; // a 是 int
+b=42; // b 是一个 int,(ci的顶层const在拷贝时被忽略掉了)
+c=42; // c 也是一个int
+d=42; // d 是一个 int *,所以语句非法
+e=42; // e 是一个 const int *, 所以语句非法
+g=42; // g 是一个 const int 的引用，引用都是底层const，所以不能被赋值
+```
+
+## 练习2.35
+
+判断下列定义推断出的类型是什么，然后编写程序进行验证。
+
+
+```cpp
+const int i = 42;
+auto j = i; const auto &k = i; auto *p = &i; 
+const auto j2 = i, &k2 = i;
+```
+
+解：
+
+```
+j 是 int // auto一般忽略掉顶层const
+k 是 const int的引用 // const已被定义了，auto只好是const int 引用
+p 是const int * // p是指向i的指针，由于i是const int，因此p是指向const int的指针
+j2 是const int // 已经定义了const，所以一定是const int
+k2 是 const int 的引用。 // 引用不会忽略掉顶层const，因此是const int引用
+```
+
+
+
