@@ -80,3 +80,60 @@ int main() {
 };
 ```
 
+## 练习3.7
+
+就上一题完成的程序而言，如果将循环控制的变量设置为char将发生什么？先估计一下结果，然后实际编程进行验证。
+
+解：
+
+如果设置为char，原来的字符串不会发生改变。但如果设置为char引用（&），原来字符串会发生改变。
+
+```cpp
+#include <iostream>
+#include <string>
+#include <cctype>
+
+using std::string;
+using std::cin;
+using std::cout;
+using std::endl;
+
+int main()
+{
+	string s = "this is a string";
+
+	for (char &x : s)    // char vs char& 对string s的影响
+	{
+		x = 'X';
+	}
+
+	cout << s << endl;
+	return 0;
+}
+```
+
+## 练习3.9
+下面的程序有何作用？它合法吗？如果不合法？为什么？
+
+```cpp
+string s;
+cout << s[0] << endl;
+```
+
+解：
+
+不合法。使用下标访问空字符串是非法的行为。
+
+## 练习3.11
+
+下面的范围for语句合法吗？如果合法，c的类型是什么？
+
+```cpp
+const string s = "Keep out!";
+for(auto &c : s){ /* ... */ }
+```
+
+解：
+
+要根据for循环中的代码来看是否合法，c是string 对象中字符的引用，s是常量。因此如果for循环中的代码重新给c赋值就会非法，如果不改变c的值，那么合法。
+
