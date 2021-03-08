@@ -265,3 +265,270 @@ int main()
 
 因为两个迭代器相互之间支持的运算只有 - ，而没有 + 。 但是迭代器和迭代器差值（整数值）之间支持 +。
 
+## 练习3.27
+
+假设txt_size是一个无参函数，它的返回值是int。请回答下列哪个定义是非法的，为什么？
+
+```
+unsigned buf_size = 1024;
+(a) int ia[buf_size];
+(b) int ia[4 * 7 - 14];
+(c) int ia[txt_size()];
+(d) char st[11] = "fundamental";
+```
+
+解：
+
+```
+(a) 非法。维度必须是一个常量表达式。
+(b) 合法。
+(c) 非法。txt_size() 的值必须要到运行时才能得到。
+(d) 非法。数组的大小应该是12。
+```
+
+## 练习3.28
+
+下列数组中元素的值是什么？
+
+```cpp
+string sa[10];
+int ia[10];
+int main() {
+	string sa2[10];
+	int ia2[10];
+}
+```
+
+解：
+
+ - 数组的元素会被默认初始化。 sa的元素值全部为空字符串，ia 的元素值全部为0。 sa2的元素值全部为空字符串，ia2的元素值全部未定义。
+
+## 练习3.30
+
+指出下面代码中的索引错误。
+
+```cpp
+constexpr size_t array_size = 10;
+int ia[array_size];
+for (size_t ix = 1; ix <= array_size; ++ix)
+	ia[ix] = ix;
+```
+
+解：
+
+当ix增长到 10 的时候，ia[ix]的下标越界。
+
+## 练习3.31
+
+编写一段程序，定义一个含有10个int的数组，令每个元素的值就是其下标值。
+
+```cpp
+#include <iostream>
+using std::cout; using std::endl;
+
+int main()
+{
+    int arr[10];
+    for (auto i = 0; i < 10; ++i) arr[i] = i;
+    for (auto i : arr) cout << i << " ";
+    cout << endl;
+
+    return 0;
+}
+```
+
+## 练习3.32
+
+将上一题刚刚创建的数组拷贝给另一数组。利用vector重写程序，实现类似的功能。
+
+```cpp
+#include <iostream>
+#include <vector>
+using std::cout; using std::endl; using std::vector;
+
+int main()
+{
+    // array
+    int arr[10];
+    for (int i = 0; i < 10; ++i) arr[i] = i;
+    int arr2[10];
+    for (int i = 0; i < 10; ++i) arr2[i] = arr[i];
+
+    // vector
+    vector<int> v(10);
+    for (int i = 0; i != 10; ++i) v[i] = arr[i];
+    vector<int> v2(v);
+    for (auto i : v2) cout << i << " ";
+    cout << endl;
+
+    return 0;
+}
+```
+
+## 练习3.33
+对于104页的程序来说，如果不初始化scores将会发生什么？
+
+```cpp
+// page 104
+// in a function
+unsigned scores[11] = {};
+```
+
+解：
+
+数组中所有元素的值将会未定义。
+
+
+## 练习3.34
+
+假定p1 和 p2 都指向同一个数组中的元素，则下面程序的功能是什么？什么情况下该程序是非法的？
+```cpp
+p1 += p2 - p1;
+```
+
+解：
+
+将 p1 移动到 p2 的位置。任何情况下都合法。
+
+
+## 练习3.36
+
+编写一段程序，比较两个数组是否相等。再写一段程序，比较两个vector对象是否相等。
+
+解：
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <iterator>
+
+using std::begin; using std::end; using std::cout; using std::endl; using std::vector;
+
+// pb point to begin of the array, pe point to end of the array.
+bool compare(int* const pb1, int* const pe1, int* const pb2, int* const pe2)
+{
+    if ((pe1 - pb1) != (pe2 - pb2)) // have different size.
+        return false;
+    else
+    {
+        for (int* i = pb1, *j = pb2; (i != pe1) && (j != pe2); ++i, ++j)
+            if (*i != *j) return false;
+    }
+
+    return true;
+}
+
+int main()
+{
+    int arr1[3] = { 0, 1, 2 };
+    int arr2[3] = { 0, 2, 4 };
+
+    if (compare(begin(arr1), end(arr1), begin(arr2), end(arr2)))
+        cout << "The two arrays are equal." << endl;
+    else
+        cout << "The two arrays are not equal." << endl;
+
+    cout << "==========" << endl;
+
+    vector<int> vec1 = { 0, 1, 2 };
+    vector<int> vec2 = { 0, 1, 2 };
+
+    if (vec1 == vec2)
+        cout << "The two vectors are equal." << endl;
+    else
+        cout << "The two vectors are not equal." << endl;
+
+    return 0;
+}
+```
+
+## 练习3.37
+下面的程序是何含义，程序的输出结果是什么？
+
+```cpp
+const char ca[] = { 'h', 'e', 'l', 'l', 'o' };
+const char *cp = ca;
+while (*cp) {
+    cout << *cp << endl;
+    ++cp;
+}
+```
+
+解：
+
+会将ca 字符数组中的元素打印出来。但是因为没有空字符的存在，程序不会退出循环。
+
+## 练习3.38
+
+在本节中我们提到，将两个指针相加不但是非法的，而且也没有什么意义。请问为什么两个指针相加没有意义？
+
+解：
+
+将两个指针相减可以表示两个指针(在同一数组中)相距的距离，将指针加上一个整数也可以表示移动这个指针到某一位置。但是两个指针相加并没有逻辑上的意义，因此两个指针不能相加。
+
+## 练习3.39
+编写一段程序，比较两个 string 对象。再编写一段程序，比较两个C风格字符串的内容。
+
+解：
+
+```cpp
+#include <iostream>
+#include <string>
+#include <cstring>
+using std::cout; using std::endl; using std::string;
+
+int main()
+{
+    // use string.
+    string s1("Mooophy"), s2("Pezy");
+    if (s1 == s2)
+        cout << "same string." << endl;
+    else if (s1 > s2)
+        cout << "Mooophy > Pezy" << endl;
+    else
+        cout << "Mooophy < Pezy" << endl;
+
+    cout << "=========" << endl;
+
+    // use C-Style character strings.
+    const char* cs1 = "Wangyue";
+    const char* cs2 = "Pezy";
+    auto result = strcmp(cs1, cs2);
+    if (result == 0)
+        cout << "same string." << endl;
+    else if (result < 0)
+        cout << "Wangyue < Pezy" << endl;
+    else
+        cout << "Wangyue > Pezy" << endl;
+
+    return 0;
+}
+```
+
+## 练习3.40
+编写一段程序，定义两个字符数组并用字符串字面值初始化它们；接着再定义一个字符数组存放前面两个数组连接后的结果。使用strcpy和strcat把前两个数组的内容拷贝到第三个数组当中。
+
+解：
+
+```cpp
+#include <iostream>
+#include <cstring>
+
+const char cstr1[]="Hello";
+const char cstr2[]="world!";
+
+int main()
+{
+    constexpr size_t new_size = strlen(cstr1) + strlen(" ") + strlen(cstr2) +1;
+    char cstr3[new_size];
+    
+    strcpy(cstr3, cstr1);
+    strcat(cstr3, " ");
+    strcat(cstr3, cstr2);
+    
+    std::cout << cstr3 << std::endl;
+}
+```
+
+
+
