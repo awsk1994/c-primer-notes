@@ -530,5 +530,49 @@ int main()
 }
 ```
 
+## 练习3.41
+编写一段程序，用整型数组初始化一个vector对象。
+
+```cpp
+#include <iostream>
+#include <vector>
+using std::vector; using std::cout; using std::endl; using std::begin; using std::end;
+
+int main()
+{
+    int arr[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+    vector<int> v(begin(arr), end(arr));
+
+    for (auto i : v) cout << i << " ";
+    cout << endl;
+
+    return 0;
+}
+```
+
+## 练习3.42
+
+编写一段程序，将含有整数元素的 vector 对象拷贝给一个整型数组。
+
+解：
+
+```cpp
+#include <iostream>
+#include <vector>
+using std::vector; using std::cout; using std::endl; using std::begin; using std::end;
+
+int main()
+{
+    vector<int> v{ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+    int arr[10];
+    for (int i = 0; i != v.size(); ++i) arr[i] = v[i];
+
+    for (auto i : arr) cout << i << " ";
+    cout << endl;
+
+    return 0;
+}
+```
+
 
 
