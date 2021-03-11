@@ -574,5 +574,99 @@ int main()
 }
 ```
 
+## 练习3.43
 
+编写3个不同版本的程序，令其均能输出ia的元素。 版本1使用范围for语句管理迭代过程；版本2和版本3都使用普通for语句，其中版本2要求使用下标运算符，版本3要求使用指针。 此外，在所有3个版本的程序中都要直接写出数据类型，而不能使用类型别名、auto关键字和decltype关键字。
 
+解：
+
+```cpp
+#include <iostream>
+
+using std::cin;
+using std::cout;
+using std::endl;
+
+int main()
+{
+  const int row = 2, col = 3;
+  int arr[row][col]= {1,2,3,4,5,6};
+
+  // Method 1 (use iteration)
+  cout << "Method 1 (use iteration)" << endl;
+  for(int (&row)[3] : arr)
+    for(int col : row)
+      cout << col << ", ";
+  cout << endl;
+  
+  // Method 2 (use subscript)
+  cout << "Method 2 (use subscript)" << endl;
+  for(int y = 0; y < row; ++y)
+    for(int x = 0; x < col; ++x)
+      cout << arr[y][x] << ", ";
+  cout << endl;
+
+  // Method 3 (use pointer)
+  cout << "Method 3 (use pointer)" << endl;
+  for(int (*p)[3] = arr; p != arr + row; ++p)
+    for(int *q = *p; q != *p + col; ++q)
+      cout << *q << ", ";
+  cout << endl;
+
+  return 0;
+}
+```
+
+## 练习3.44
+
+改写上一个练习中的程序，使用类型别名来代替循环控制变量的类型。
+
+解：
+
+ - 改写了3.43使用`using int_array = int[col];`
+```cpp
+using int_array = int[col];
+
+// Method 1 (use iteration)
+cout << "Method 1 (use iteration)" << endl;
+for(int_array &row : arr)
+  for(int col : row)
+    cout << col << ", ";
+cout << endl;
+
+// Method 3 (use pointer)
+cout << "Method 3 (use pointer)" << endl;
+for(int_array *p = arr; p != arr + row; ++p)
+  for(int *q = *p; q != *p + col; ++q)
+    cout << *q << ", ";
+cout << endl;
+```
+
+## 练习3.45
+
+再一次改写程序，这次使用 auto 关键字。
+
+解：
+
+```cpp
+// Method 1 (use iteration)
+cout << "Method 1 (use iteration)" << endl;
+for(auto &row : arr)
+  for(auto col : row)
+    cout << col << ", ";
+cout << endl;
+
+// Method 2 (use subscript)
+cout << "Method 2 (use subscript)" << endl;
+for(auto y = 0; y < row; ++y)
+  for(auto x = 0; x < col; ++x)
+    cout << arr[y][x] << ", ";
+cout << endl;
+
+// Method 3 (use pointer)
+cout << "Method 3 (use pointer)" << endl;
+  for(auto p = arr; p != arr + row; ++p)
+    for(auto *q = *p; q != *p + col; ++q)
+      cout << *q << ", ";
+  cout << endl;
+```
