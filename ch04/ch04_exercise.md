@@ -216,3 +216,52 @@ someValue ? ++x, ++y : --x, --y
 
 如果someValue的值为真，x 和 y 的值都自增并返回 y 值，然后丢弃y值，y递减并返回y值。如果someValue的值为假，x 递减并返回x 值，然后丢弃x值，y递减并返回y值。
 
+## 练习4.34
+根据本节给出的变量定义，说明在下面的表达式中将发生什么样的类型转换：
+
+```
+(a) if (fval)
+(b) dval = fval + ival;
+(c) dval + ival * cval;
+```
+
+需要注意每种运算符遵循的是左结合律还是右结合律。
+
+解：
+
+```
+(a) fval 转换为 bool 类型
+(b) ival 转换为 float ，相加的结果转换为 double
+(c) cval 转换为 int，然后相乘的结果转换为 double
+```
+
+## 练习4.35
+
+假设有如下的定义：
+
+```cpp
+char cval;
+int ival;
+unsigned int ui;
+float fval;
+double dval;
+```
+
+请回答在下面的表达式中发生了隐式类型转换吗？如果有，指出来。
+
+```
+(a) cval = 'a' + 3;
+(b) fval = ui - ival * 1.0;
+(c) dval = ui * fval;
+(d) cval = ival + fval + dval;
+```
+
+解：
+
+(a) 'a' 转换为 int ，然后与 3 相加的结果转换为 char
+(b) ival 转换为 double，ui 转换为 double，结果转换为 float
+(c) ui 转换为 float，结果转换为 double
+(d) ival 转换为 float，与fval相加后的结果转换为 double，最后的结果转换为char
+
+
+
