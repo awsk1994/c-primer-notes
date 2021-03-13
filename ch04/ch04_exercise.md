@@ -99,3 +99,49 @@ if (i == 1024)
 
 
 
+## 练习4.21
+编写一段程序，使用条件运算符从vector中找到哪些元素的值是奇数，然后将这些奇数值翻倍。
+
+解：
+
+```cpp
+#include <iostream>
+#include <vector>
+
+using std::cout;
+using std::endl;
+using std::vector;
+
+int main()
+{
+	vector<int> ivec{ 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+
+	for (auto i : ivec)
+	{
+		cout << ((i & 0x1) ? i * 2 : i) << " ";
+	}
+	cout << endl;
+
+	return 0;
+}
+```
+
+## 练习4.23
+因为运算符的优先级问题，下面这条表达式无法通过编译。根据4.12节中的表指出它的问题在哪里？应该如何修改？
+
+string s = "word";
+string pl = s + s[s.size() - 1] == 's' ? "" : "s" ;
+
+解：
+
+加法运算符的优先级高于条件运算符，所以意义上是:
+
+```cpp
+string pl = (s + s[s.size() - 1]) == 's' ? "" : "s" ;
+```
+ - 但`s+s[...]`的返回是string，不可以跟`'s'`（字符类型）做比较；不知道也是不是因为string会将还成pointer，因此一定无法跟字符比较
+ - 因此要改为：
+```cpp
+string pl = s + (s[s.size() - 1] == 's' ? "" : "s") ;
+```
+
