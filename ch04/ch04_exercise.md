@@ -145,3 +145,74 @@ string pl = (s + s[s.size() - 1]) == 's' ? "" : "s" ;
 string pl = s + (s[s.size() - 1] == 's' ? "" : "s") ;
 ```
 
+## 练习4.29
+推断下面代码的输出结果并说明理由。实际运行这段程序，结果和你想象的一样吗？如不一样，为什么？
+
+```cpp
+int x[10];   int *p = x;
+cout << sizeof(x)/sizeof(*x) << endl;
+cout << sizeof(p)/sizeof(*p) << endl;
+```
+
+解：
+
+第一个输出结果是 10。第二个结果1,此处用法不合理不是未定义，参考https://www.geeksforgeeks.org/using-sizof-operator-with-array-paratmeters/。
+
+## 练习4.30
+根据4.12节中的表，在下述表达式的适当位置加上括号，使得加上括号之后的表达式的含义与原来的含义相同。
+
+```
+(a) sizeof x + y      
+(b) sizeof p->mem[i]  
+(c) sizeof a < b     
+(d) sizeof f() 
+```
+
+解：
+
+```
+(a) (sizeof x) + y
+(b) sizeof(p->mem[i])
+(c) sizeof(a) < b
+(d) sizeof(f())
+```
+
+## 练习4.31
+本节的程序使用了前置版本的递增运算符和递减运算符，解释为什么要用前置版本而不用后置版本。要想使用后置版本的递增递减运算符需要做哪些改动？使用后置版本重写本节的程序。
+
+解：
+
+在4.5节（132页）已经说过了，除非必须，否则不用递增递减运算符的后置版本。在这里要使用后者版本的递增递减运算符不需要任何改动。
+
+## 练习4.32
+解释下面这个循环的含义。
+
+```cpp
+constexpr int size = 5;
+int ia[size] = { 1, 2, 3, 4, 5 };
+for (int *ptr = ia, ix = 0;
+    ix != size && ptr != ia+size;
+    ++ix, ++ptr) { /* ... */ }
+```
+
+解：
+
+这个循环在遍历数组ia，指针ptr和整型ix都是起到一个循环计数的功能。
+
+## 练习4.33
+根据4.12节中的表说明下面这条表达式的含义。
+
+```cpp
+someValue ? ++x, ++y : --x, --y
+```
+
+解：
+
+逗号表达式的优先级是最低的。因此这条表达式也等于：
+
+```cpp
+(someValue ? ++x, ++y : --x), --y
+```
+
+如果someValue的值为真，x 和 y 的值都自增并返回 y 值，然后丢弃y值，y递减并返回y值。如果someValue的值为假，x 递减并返回x 值，然后丢弃x值，y递减并返回y值。
+
