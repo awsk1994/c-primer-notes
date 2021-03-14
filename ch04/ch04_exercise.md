@@ -263,5 +263,41 @@ double dval;
 (c) ui 转换为 float，结果转换为 double
 (d) ival 转换为 float，与fval相加后的结果转换为 double，最后的结果转换为char
 
+## 练习4.36
 
+假设 i 是int类型，d 是double类型，书写表达式 i*=d 使其执行整数类型的乘法而非浮点类型的乘法。
+
+解：
+
+`i *= static_cast<int>(d);`
+
+## 练习4.37
+
+练习4.37 用命名的强制类型转换改写下列旧式的转换语句。
+
+```
+int i; double d; const string *ps; char *pc; void *pv;
+(a) pv = (void*)ps;
+(b) i = int(*pc);
+(c) pv = &d;
+(d) pc = (char*)pv;
+```
+
+解：
+
+```
+(a) pv = static_cast<void*>(const_cast<string*>(ps));
+(b) i = static_cast<int>(*pc);
+(c) pv = static_cast<void*>(&d);
+(d) pc = static_cast<char*>(pv);
+```
+
+## 练习4.38
+说明下面这条表达式的含义。
+
+`double slope = static_cast<double>(j/i);`
+
+解：
+
+将j/i的结果值转换为double，然后赋值给slope。
 
