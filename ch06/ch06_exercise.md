@@ -215,3 +215,32 @@ void print(const int (&ia)[10])
 		cout << ia[i] << endl;
 }
 ```
+
+## 练习6.26
+编写一个程序，使其接受本节所示的选项；输出传递给main函数的实参内容。
+
+解：
+
+包括6.25
+
+```cpp
+#include <iostream>
+#include <string>
+
+int main(int argc, char **argv)
+{
+    std::string str;
+    for (int i = 1; i != argc; ++i)
+        str += std::string(argv[i]) + " ";
+
+    std::cout << str << std::endl;
+    return 0;
+}
+```
+
+## 练习6.29
+在范围for循环中使用initializer_list对象时，应该将循环控制变量声明成引用类型吗？为什么？
+
+解：
+
+应该使用常量引用类型。initializer_list对象中的元素都是常量，我们无法修改initializer_list对象中的元素的值。
